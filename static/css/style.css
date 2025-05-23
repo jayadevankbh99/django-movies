@@ -1,0 +1,75 @@
+body {
+    font-family: 'Open Sans', sans-serif;
+    background-color: #f8f9fa;
+    color: #333;
+}
+
+/* Movie card styling */
+.movie-card {
+    transition: transform 0.3s;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+.movie-card:hover {
+    transform: translateY(-5px);
+}
+
+.card-img-top-wrapper {
+    height: 300px;
+    overflow: hidden;
+}
+
+.card-img-top {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Form styling */
+.form-control:focus, 
+.form-select:focus {
+    border-color: #6c757d;
+    box-shadow: 0 0 0 0.25rem rgba(108, 117, 125, 0.25);
+}
+
+/* Filter form */
+#filter .form-label {
+    font-weight: 600;
+}
+
+/* Movie detail */
+.movie-poster img {
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+
+.genres .badge {
+    font-size: 0.9rem;
+    padding: 0.5rem 0.75rem;
+}
+
+/* Search form */
+.search-form .form-control {
+    width: 100%;
+}
+
+/* Pagination */
+.pagination .page-link {
+    color: #495057;
+}
+
+.pagination .page-item.active .page-link {
+    background-color: #495057;
+    border-color: #495057;
+}
+
+/* Footer */
+footer {
+    margin-top: auto;
+}
+
+/* Responsive */
+@media (max-width: 767.98px) {
+    .card-img-top-wrapper {
+        height: 220px;
+    }
+}
