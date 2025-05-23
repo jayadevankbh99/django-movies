@@ -1,0 +1,97 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{{ movie.title }} ({{ movie.release_year }}) | MovieList{% endblock %}
+
+{% block content %}
+<div class="movie-detail">
+    <div class="row">
+        <!-- Movie Poster -->
+        <div class="col-md-4 mb-4">
+            <div class="movie-poster">
+                {% if movie.poster %}
+                <img src="{{ movie.poster.url }}" alt="{{ movie.title }}" class="img-fluid rounded">
+                {% else %}
+                <img src="{% static 'img/default-poster.jpg' %}" alt="No poster available" class="img-fluid rounded">
+                {% endif %}
+            </div>
+        </div>
+        
+        <!-- Movie Information -->
+        <div class="col-md-8">
+            <h1 class="mb-2">{{ movie.title }} <span class="text-muted">({{ movie.release_year }})</span></h1>
+            
+            {% if movie.rating %}
+            <div class="mb-3">
+                <span class="badge bg-warning text-dark p-2">
+                    <i class="fas fa-star me-1"></i> {{ movie.rating }}/10
+                </span>
+            </div>
+            {% endif %}
+            
+            <div class="mb-3">
+                <h5>Genres</h5>
+                <div class="genres">
+                    {% for genre in movie.genres.all %}
+                    <a href="{% url 'movie_list' %}?genre={{ genre.id }}" class="badge bg-secondary text-decoration-none me-1">{{ genre.name }}</a>
+                    {% empty %}
+                    <span class="text-muted">No genres listed</span>
+                    {% endfor %}
+                </div>
+            </div>
+            
+            <div class="mb-3">
+                <h5>Director</h5>
+                {% if movie.director %}
+                <p><a href="{% url 'movie_list' %}?director={{ movie.director.id }}" class="text-decoration-none">{{ movie.director.name }}</a></p>
+                {% else %}
+                <p class="text-muted">Unknown</p>
+                {% endif %}
+            </div>
+            
+            <div class="mb-4">
+                <h5>Cast</h5>
+                <div class="actors">
+                    {% for actor in movie.actors.all %}
+                    <a href="{% url 'movie_list' %}?actor={{ actor.id }}" class="text-decoration-none me-2">{{ actor.name }}</a>{% if not forloop.last %}, {% endif %}
+                    {% empty %}
+                    <p class="text-muted">No cast listed</p>
+                    {% endfor %}
+                </div>
+            </div>
+            
+            <div class="mb-4">
+                <h5>Synopsis</h5>
+                <p>{{ movie.description }}</p>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Related Movies -->
+    {% if related_movies %}
+    <div class="related-movies mt-5">
+        <h3 class="mb-4">You might also like</h3>
+        <div class="row row-cols-1 row-cols-md-4 g-4">
+            {% for related in related_movies %}
+            <div class="col">
+                <div class="card h-100">
+                    <div class="card-img-top-wrapper">
+                        {% if related.poster %}
+                        <img src="{{ related.poster.url }}" alt="{{ related.title }}" class="card-img-top">
+                        {% else %}
+                        <img src="{% static 'img/default-poster.jpg' %}" alt="No poster available" class="card-img-top">
+                        {% endif %}
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title">{{ related.title }}</h5>
+                        <p class="card-text text-muted">{{ related.release_year }}</p>
+                        <a href="{{ related.get_absolute_url }}" class="btn btn-sm btn-outline-primary">View Details</a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}
